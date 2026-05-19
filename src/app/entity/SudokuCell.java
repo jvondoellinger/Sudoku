@@ -4,18 +4,16 @@ import app.valueObject.Coordinate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SudokuCell extends BaseEntity<SudokuCell> {
+public class SudokuCell {
 	private final Coordinate coordinate;
 	private Byte value;
 
 	protected SudokuCell(Byte value, Coordinate coordinate) {
-		super(new ArrayList<>());
 		this.coordinate = coordinate;
 		this.value = value;
 	}
 
-
-
+	// Getters
 	public final Coordinate getCoordinate() {
 		return coordinate;
 	}

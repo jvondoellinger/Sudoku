@@ -1,10 +1,7 @@
-import app.entity.SudokuGrid;
 import app.entity.SudokuGridFactory;
-import app.entity.SudokuSubgridFactory;
 import app.layout.SudokuFrame;
 
 import javax.swing.*;
-import java.awt.image.ImageObserver;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

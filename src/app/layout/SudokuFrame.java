@@ -19,7 +19,7 @@ public class SudokuFrame extends JFrame {
 			var cell = new JTextField();
 
 			cell.setHorizontalAlignment(SwingConstants.CENTER);
-			cell.setFont(new Font("Arial", Font.BOLD, 12));
+			cell.setFont(new Font("Arial", Font.BOLD, 50));
 			cell.setBorder(new LineBorder(Color.BLACK));
 
 			board.add(cell);

@@ -11,59 +11,51 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SudokuGrid
-	   extends BaseEntity<SudokuGrid>
-	   implements GridSized<SudokuSubgrid>, CoordinateAccessible<SudokuSubgrid> {
+	   implements GridSized<SudokuCell>, CoordinateAccessible<SudokuCell> {
+	private final LinkedList<SudokuCell> cells;
 
-	private final LinkedList<SudokuSubgrid> subgrids;
-
-	public SudokuGrid(LinkedList<SudokuSubgrid> subgrids) {
-		super(new ArrayList<>());
-		this.subgrids = subgrids;
+	// Constructors
+	public SudokuGrid(LinkedList<SudokuCell> cells) {
+		this.cells = cells;
 	}
 
-	public SudokuGrid(List<Rule<SudokuGrid>> rules,
-	                  LinkedList<SudokuSubgrid> subgrids) {
-		super(rules);
-		this.subgrids = subgrids;
+	// Getter
+	public LinkedList<SudokuCell> getCells() {
+		return cells;
 	}
 
+	// Overrides
 	@Override
-	public LinkedList<SudokuSubgrid> getRow(int y) {
-		return subgrids.stream()
+	public LinkedList<SudokuCell> getRow(int y) {
+		return cells.stream()
 			   .filter(ssg -> ssg.getCoordinate().heightEquals(y))
 			   .collect(Collectors.toCollection(LinkedList::new));
 	}
-
-	// ! Helpers
 	@Override
-	public LinkedList<SudokuSubgrid> getColumn(int x) {
-		return subgrids.stream()
+	public LinkedList<SudokuCell> getColumn(int x) {
+		return cells.stream()
 			   .filter(ssg -> ssg.getCoordinate().widthEquals(x))
 			   .collect(Collectors.toCollection(LinkedList::new));
 	}
-
-	// ! Overrides
 	@Override
 	public int getWidth() {
-		return subgrids.stream()
-			   .map(SudokuSubgrid::getCoordinate)
+		return cells.stream()
+			   .map(SudokuCell::getCoordinate)
 			   .map(Coordinate::getX)
 			   .max(Integer::compareTo)
 			   .orElse(0);
 	}
-
 	@Override
 	public int getHeight() {
-		return subgrids.stream()
-			   .map(SudokuSubgrid::getCoordinate)
+		return cells.stream()
+			   .map(SudokuCell::getCoordinate)
 			   .map(Coordinate::getY)
 			   .max(Integer::compareTo)
 			   .orElse(0);
 	}
-
 	@Override
-	public Optional<SudokuSubgrid> getByCoordinate(Coordinate coordinate) {
-		return subgrids.stream()
+	public Optional<SudokuCell> getByCoordinate(Coordinate coordinate) {
+		return cells.stream()
 			   .filter(x -> x.getCoordinate().equals(coordinate))
 			   .findFirst();
 	}
@@ -71,20 +63,21 @@ public class SudokuGrid
 
 	// Problema:
 	// Ele pega uma subgrid e printa como se fosse 1 linha! Preciso pegar 3 subgrids da Y= Index e depois as cells de Y= index
+	// Vai pegar as 3 linhas que há dentro da grid (que são 3 x 3 subgrids)
 
 	@Override
 	public String toString() {
 		var stringBuilder = new StringBuilder();
 
 		stringBuilder.append("==================================================================\n");
-		for (byte y = 1; y <= getHeight() * getHeight(); y++) {
+		for (byte y = 1; y <= getHeight(); y++) {
+
+			var rowSubgrids = getRow(y);
+
 			byte finalY = y;
-
-			var rowSubgrids = getRow(finalY);
-
 			var rowCells = rowSubgrids
 				   .stream()
-				   .flatMap(ssg -> ssg.getRow(finalY).stream())
+				   .filter(cell -> cell.getCoordinate().getY() == finalY)
 				   .collect(Collectors.toCollection(LinkedList::new));
 
 			var rowBuilderString = rowStringBuilder(rowCells);
