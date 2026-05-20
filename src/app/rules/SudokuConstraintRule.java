@@ -1,4 +1,4 @@
-package app.rules.factory;
+package app.rules;
 
 import app.entity.SudokuCell;
 

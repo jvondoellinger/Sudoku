@@ -2,6 +2,7 @@ package app.entity;
 
 import app.CoordinateAccessible;
 import app.GridSized;
+import app.properties.SudokuProperties;
 import app.valueObject.Coordinate;
 
 import java.util.ArrayList;
@@ -12,11 +13,14 @@ import java.util.stream.Collectors;
 
 public class SudokuGrid
 	   implements GridSized<SudokuCell>, CoordinateAccessible<SudokuCell> {
+	private final SudokuProperties properties;
 	private final LinkedList<SudokuCell> cells;
 
 	// Constructors
-	public SudokuGrid(LinkedList<SudokuCell> cells) {
+	public SudokuGrid(LinkedList<SudokuCell> cells,
+				   SudokuProperties properties) {
 		this.cells = cells;
+		this.properties = properties;
 	}
 
 	// Getter
@@ -39,20 +43,13 @@ public class SudokuGrid
 	}
 	@Override
 	public int getWidth() {
-		return cells.stream()
-			   .map(SudokuCell::getCoordinate)
-			   .map(Coordinate::getX)
-			   .max(Integer::compareTo)
-			   .orElse(0);
+		return properties.getWidth();
 	}
 	@Override
 	public int getHeight() {
-		return cells.stream()
-			   .map(SudokuCell::getCoordinate)
-			   .map(Coordinate::getY)
-			   .max(Integer::compareTo)
-			   .orElse(0);
+		return properties.getHeight();
 	}
+
 	@Override
 	public Optional<SudokuCell> getByCoordinate(Coordinate coordinate) {
 		return cells.stream()

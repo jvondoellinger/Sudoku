@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-import static app.helpers.CoordinateHelper.forEachCoordinate;
+import static app.helpers.CoordinateHelper.forEachSquareCoordinates;
 
 public class SudokuFrame extends JFrame {
 	public SudokuFrame() {
@@ -15,7 +15,7 @@ public class SudokuFrame extends JFrame {
 		var board = new JPanel();
 		board.setLayout(new GridLayout(9, 9));
 
-		forEachCoordinate(9, 9, coordinate -> {
+		forEachSquareCoordinates(9, 9, coordinate -> {
 			var cell = new JTextField();
 
 			cell.setHorizontalAlignment(SwingConstants.CENTER);

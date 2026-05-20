@@ -1,4 +1,4 @@
-package app.rules.onGame;
+package app.rules;
 
 import app.entity.SudokuGrid;
 import app.valueObject.Coordinate;

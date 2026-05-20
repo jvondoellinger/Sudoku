@@ -1,8 +1,8 @@
 package app.helpers;
 
 import app.valueObject.Coordinate;
-import app.valueObject.Pair;
 
+import java.util.LinkedList;
 import java.util.function.Consumer;
 
 public class CoordinateHelper {
@@ -24,7 +24,7 @@ public class CoordinateHelper {
 	 * @apiNote Atualmente validado apenas para matrizes quadradas
 	 * (ex.: 3x3, 5x5, 9x9).
 	 */
-	public static void forEachCoordinate(final int maxHeight, final int maxWidth, final Consumer<Coordinate> consumer) {
+	public static void forEachSquareCoordinates(final int maxHeight, final int maxWidth, final Consumer<Coordinate> consumer) {
 		for (int y = 1; y <= maxWidth; y++) {
 			for (int x = 1; x <= maxHeight; x++) {
 				var coordinate = new Coordinate(x, y);
@@ -32,4 +32,5 @@ public class CoordinateHelper {
 			}
 		}
 	}
+
 }
